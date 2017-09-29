@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/startMove.js"></script>
+	<style>
+			.ball{width:100px;height:100px;position:absolute;left:100px;top:100px;background:red;border-radius:50%;}
+
+	</style>
+	<script>
+		window.onload=function(){
+			var btnL=document.querySelectorAll('.btn')[0];
+			var btnR=document.querySelectorAll('.btn')[1];
+			var oBall=document.getElementById("div1");
+			btnR.onclick=function(){
+				startMove(oBall,{left:1000,opacity:50})	
+			}
+			btnL.onclick=function(){
+				startMove(oBall,{left:100,opacity:100})	
+			}
+		}
+
+	</script>
+</head>
+<body>
+	<div id="div1" class="ball"></div>
+	<input class="btn" type="button" value="向左">
+	<input class="btn" type="button" value="向右">
+</body>
+</html>
