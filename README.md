@@ -1,2 +1,2 @@
 # JS_litterFunctions
-javascript常用功能合集
+javascript常用功能合集,纯静态不与服务器端通信
