@@ -1,4 +1,4 @@
-function drag(oDiv){
+function drag(oDiv,dragScope){
 	
 	
 	var disX=0;
@@ -21,6 +21,25 @@ function drag(oDiv){
 			{
 				l=0;
 			}
+			else if(l>dragScope.offsetWidth-oDiv.offsetWidth)
+			{
+				l=dragScope.offsetWidth-oDiv.offsetWidth;
+			}
+			
+			if(t<0)
+			{
+				t=0;
+			}
+			else if(t>dragScope.offsetHeight-oDiv.offsetHeight)
+			{
+				t=dragScope.offsetHeight-oDiv.offsetHeight;
+			}
+
+			//以下是针对在游览器客户区范围内拖拽
+			/*if(l<0)
+			{
+				l=0;
+			}
 			else if(l>document.documentElement.clientWidth-oDiv.offsetWidth)
 			{
 				l=document.documentElement.clientWidth-oDiv.offsetWidth;
@@ -33,7 +52,7 @@ function drag(oDiv){
 			else if(t>document.documentElement.clientHeight-oDiv.offsetHeight)
 			{
 				t=document.documentElement.clientHeight-oDiv.offsetHeight;
-			}
+			}*/
 			
 			oDiv.style.left=l+'px';
 			oDiv.style.top=t+'px';

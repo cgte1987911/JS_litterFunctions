@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#wrap{width:470px;height:150px;overflow: hidden;margin:100px auto 0;background:black;position:relative;}
+		#picsWrap{height:150px;position:absolute;top:0;left:0;}
+		#picsWrap img{float:left;width:470px;height:150px;}
+		.tabBtn{width:20px;height:20px;background:red;position:absolute;}
+		#tabBtnL{left:25px;top:65px;}
+		#tabBtnR{right:25px;top:65px;}
+	</style>
+	<script src="../js/startMove.js"></script>
+	<script>
+		window.onload=function(){
+			var oWrap=document.getElementById("wrap");
+			var picsWrap=document.getElementById("picsWrap");
+			var tabBtnL=document.getElementById("tabBtnL");
+			var tabBtnR=document.getElementById("tabBtnR");
+			rolePic(oWrap,picsWrap,470,tabBtnL,tabBtnR);
+		}
+		function rolePic(oWrap,picsWrap,imgWidth,tabBtnL,tabBtnR){
+			picsWrap.innerHTML+=picsWrap.innerHTML;
+			var picLength=picsWrap.getElementsByTagName('img').length
+			picsWrap.style.width=picLength*imgWidth+'px';
+			var now=0;
+			tabBtnL.onclick=function(){
+				now--;
+				if(now==-1)
+				{
+					picsWrap.style.left=(picLength/2+1)*imgWidth;
+					now=picLength/2-1
+				}
+				startMove(picsWrap,{left:-now*imgWidth});
+			}
+			tabBtnR.onclick=function(){
+				now++;
+				if(now==picLength/2+1)
+				{
+					picsWrap.style.left=0;
+					now=1
+				}
+				startMove(picsWrap,{left:-now*imgWidth});
+			
+		}
+	}
+	</script>
+</head>
+<body>
+	<div id="wrap">
+		<div id="picsWrap">
+			<img src="../images/1.jpg">
+			<img src="../images/2.jpg">
+			<img src="../images/3.jpg">
+			<img src="../images/4.jpg">
+			<img src="../images/5.jpg">
+		</div>
+		<div class="tabBtn" id="tabBtnL"></div>
+		<div class="tabBtn" id="tabBtnR"></div>
+	</div>
+</body>
+</html>
