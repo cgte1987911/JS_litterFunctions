@@ -4,46 +4,87 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<style>
+		*{margin:0;padding:0;}
+		ol{list-style:none;}
 		#wrap{width:470px;height:150px;overflow: hidden;margin:100px auto 0;background:black;position:relative;}
 		#picsWrap{height:150px;position:absolute;top:0;left:0;}
 		#picsWrap img{float:left;width:470px;height:150px;}
 		.tabBtn{width:20px;height:20px;background:red;position:absolute;}
 		#tabBtnL{left:25px;top:65px;}
 		#tabBtnR{right:25px;top:65px;}
+		#picIndex{position:absolute;right:30px;bottom:20px;}
+		#picIndex li{float:left;line-height:20px;width:20px;height:20px;text-align:center;background:#fcf2cf;color:#d94b01;margin-right:5px;cursor:pointer;}
+		#picIndex .active{color:white;background:#ffb442;}
 	</style>
 	<script src="../js/startMove.js"></script>
 	<script>
 		window.onload=function(){
 			var oWrap=document.getElementById("wrap");
 			var picsWrap=document.getElementById("picsWrap");
+			var picIndex=document.getElementById("picIndex");
+			var aPicIndex=picIndex.getElementsByTagName('li');
 			var tabBtnL=document.getElementById("tabBtnL");
 			var tabBtnR=document.getElementById("tabBtnR");
-			rolePic(oWrap,picsWrap,470,tabBtnL,tabBtnR);
+			rolePic(oWrap,picsWrap,470,aPicIndex,tabBtnL,tabBtnR);
 		}
-		function rolePic(oWrap,picsWrap,imgWidth,tabBtnL,tabBtnR){
+		function rolePic(oWrap,picsWrap,imgWidth,aPicIndex,tabBtnL,tabBtnR){
 			picsWrap.innerHTML+=picsWrap.innerHTML;
 			var picLength=picsWrap.getElementsByTagName('img').length
 			picsWrap.style.width=picLength*imgWidth+'px';
 			var now=0;
-			tabBtnL.onclick=function(){
-				now--;
-				if(now==-1)
-				{
-					picsWrap.style.left=(picLength/2+1)*imgWidth;
-					now=picLength/2-1
+			for(var i=0;i<aPicIndex.length;i++)
+			{
+				aPicIndex[i].index=i;
+				
+				aPicIndex[i].onclick=function(){
+					now=this.index
+					tab()					
 				}
-				startMove(picsWrap,{left:-now*imgWidth});
+			}
+			tabBtnL.onclick=function(){
+				now--
+				tab();
+				
 			}
 			tabBtnR.onclick=function(){
-				now++;
+				
+				++now
+				tab();
+			
+			}
+			function tab(){
+				//向左
+				if(now==-1)
+				{
+					
+					picsWrap.style.left=-((picLength/2)*imgWidth)+'px';
+					
+					now=picLength/2-1
+				}
+				//向右
 				if(now==picLength/2+1)
 				{
 					picsWrap.style.left=0;
 					now=1
-				}
+				}				
 				startMove(picsWrap,{left:-now*imgWidth});
+				for(var i=0;i<aPicIndex.length;i++)
+				{
+					aPicIndex[i].className=""
+				}
+				if(now==picLength/2)
+				{
+					aPicIndex[0].className="active"
+				}
+				else
+				{
+					aPicIndex[now].className="active"
+				}
+				
+				
+
 			
-		}
+			}
 	}
 	</script>
 </head>
@@ -56,6 +97,13 @@
 			<img src="../images/4.jpg">
 			<img src="../images/5.jpg">
 		</div>
+        <ol id="picIndex">
+        	<li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ol>
 		<div class="tabBtn" id="tabBtnL"></div>
 		<div class="tabBtn" id="tabBtnR"></div>
 	</div>
