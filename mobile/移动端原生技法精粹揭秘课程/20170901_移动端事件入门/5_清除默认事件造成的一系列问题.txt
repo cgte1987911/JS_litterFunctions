@@ -1,0 +1,28 @@
+1.新版的chrome下，不支持直接给 document和body的touch事件，阻止默认事件 
+document.addEventListener('touchstart', function(e) {
+	e.preventDefault();
+});
+所以需要在body下包一层，取它来去掉全局默认事件
+
+2.阻止默认事件带来的问题：
+	解决IOS10+ safari 以及部分安卓浏览器 不在支持 viewport的最大缩放值和禁止缩放的问题
+
+	解决IOS10+ safari下给body加overflow：hidden无效的问题
+		给元素加了 一个绝对定位，但是元素本身没有定位父级，元素如果超出了body的宽度，body 上的overflow对这个元素，不起效果
+		解决办法：
+			给body加上一个相对定位
+
+	解决事件点透的问题
+
+	禁止mouse事件执行
+
+	阻止浏览器的回弹效果
+
+	阻止触发浏览器的滚动条
+
+	阻止触发系统菜单
+
+	阻止图片文字被选中
+
+	阻止input的输入	/* 最好的解决办法，跳转到一个新页面去，然后让用在新的页面进
+	

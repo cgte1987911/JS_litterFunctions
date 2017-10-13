@@ -1,0 +1,47 @@
+1.e.preventDefault()后 a标签点击会失效
+2.所以要重新编写封装a的点击事件
+function tap(el,fn){
+	var isMove = false;
+	el.addEventListener('touchmove', function(e) {
+		isMove = true;
+	});
+	el.addEventListener('touchend', function(e) {
+		if(!isMove){
+			fn&&fn.call(el,e); //判断fn存在 就是执行
+		}
+		isMove = false;
+	});
+}
+3.以上编写的tap事件思路是当点击元素后如果再触发touchMove后就不触发点击事件否则触发。但问题时在真机下，由于手指很容易在点击元素的时候误触发touchMove造成不能触发点击
+
+4.完整版 tap事件封装
+function tap(el,fn){
+	var startPoint = {};
+	el.addEventListener('touchstart', function(e) {
+		startPoint = {
+			x: e.changedTouches[0].pageX,
+			y: e.changedTouches[0].pageY
+		}
+	});
+	el.addEventListener('touchend', function(e) {
+		var nowPoint = {
+			x: e.changedTouches[0].pageX,
+			y: e.changedTouches[0].pageY
+		}
+		if(Math.abs(nowPoint.x - startPoint.x) < 5
+		&&Math.abs(nowPoint.y - startPoint.y) < 5){
+			fn&&fn.call(el,e);
+		}
+	});
+
+}
+
+
+/*
+	touchEvent:
+		touches 当前屏幕上的手指列表
+		targetTouches 当前元素上的手指列表
+		changedTouches 触发当前的手指列表
+	clientX 和 clientY 手指相对于可视区的一个坐标
+	pageX 和 pageY 手指相对于页面的一个坐标	
+*/
